@@ -1,49 +1,118 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Slider</title>
-    <link rel="stylesheet" href="style.css">
+    <title>To-Do List</title>
+    <style>
+        body {
+            text-align: center;
+            background-color: #f4f4f9;
+            color: #383737;
+        }
+
+        h1 {
+            color: #4CAF50;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            width: 250px;
+            padding: 10px;
+        }
+
+        button {
+            background: #4CAF50;
+            color: white;
+            padding: 9px 15px;
+            font-size: 1rem;
+        }
+
+        .todo-container {
+            border: 2px solid black;
+            width: 350px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px auto;
+            padding: 10px;
+            width: 300px;
+            background: #fff;
+            border: 1px solid #ddd;
+        }
+
+        .strike {
+            text-decoration: line-through;
+            color: rgb(158, 37, 37);
+        }
+
+        .del {
+            background: #f44336;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            font-size: 0.9rem;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
+
 <body>
-    <div class="container">
-        <div class="slider">
-            <div class="slides">
-                <div class="slide">
-                    <img src="menimg1.jpeg" alt="Image 1">
-                    <div> UX DESIGNER</div>
-                    <div class="div1">James Wilson</div>
-                    <div ><button class="mess">MESSAGE</button></div>
-                  
-                </div>
-                <div class="slide">
-                    <img src="womenimg11.jpeg" alt="Image 2">
-                    <div> DATA ANALYST</div>
-                    <div class="div1">Eeta Campbell</div>
-                    <div ><button class="mess">MESSAGE</button></div>
-                </div>
-                <div class="slide">
-                    <img src="menimg2.jpeg" alt="Image 3">
-                    <div> WEB DEVELOPER</div>
-                    <div class="div1">Mark Belcher</div>
-                    <div ><button class="mess">MESSAGE</button></div>
-                </div>
-                <div class="slide">
-                    <img src="womenimg22.jpeg" alt="Image 3">
-                    <div> SERVICE DESIGNER</div>
-                    <div class="div1">Jannie D'soza</div>
-                    <div ><button class="mess">MESSAGE</button></div>
-                </div>
-            </div>
-            <div class="navigation">
-                <button class="prevbtn">❮</button> 
-                <button class="nextbtn">❯</button>
-            </div>
-        </div>
+    <div class="todo-container">
+        <h1>To-Do List</h1>
+        <input type="text" id="task-input" placeholder="Add a task">
+        <button id="add-task">Add</button>
+        <ul id="task-list"></ul>
     </div>
-    <script src="script.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#add-task').click(function () {
+                const task = $('#task-input').val().trim();
+                if (task) {
+                    const listItem = $('<li></li>').html('<input type="checkbox" class="check"> <span>' +
+                        task + '</span> <button class="del">Delete</button>');
+                    $('#task-list').append(listItem);
+                    $('#task-input').val('');
+                }
+            });
+
+            $(document).on('click', 'input[type="checkbox"]', function () {
+                const spanElement = $(this).next();
+                if ($(this).is(':checked')) {
+                    spanElement.css({
+                        'text-decoration': 'line-through',
+                        'color': 'red'
+                    });
+                } else {
+                    spanElement.css({
+                        'text-decoration': 'none'
+                    });
+                }
+            });
+
+            $(document).on('click', 'button.del', function () {
+                $(this).closest('li').remove();
+            });
+        });
+    </script>
 </body>
+
 </html>
